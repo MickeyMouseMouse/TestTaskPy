@@ -22,6 +22,13 @@ class View(QMainWindow):
     def start(self):
         self.controller.start()
 
+    def showMessage(self, title, text):
+        dialog = QMessageBox(self)
+        dialog.setWindowTitle(title)
+        dialog.setText(text)
+        dialog.setStandardButtons(QMessageBox.StandardButton.Ok)
+        dialog.exec()
+
 
 class SettingsDialog(QDialog):
     def __init__(self, controller):
