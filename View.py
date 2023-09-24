@@ -4,10 +4,9 @@ from SettingsDialog import Ui_settings_dialog
 
 
 class View(QMainWindow):
-    def __init__(self, controller, model):
+    def __init__(self, controller):
         super().__init__()
         self.controller = controller
-        self.model = model
 
         self.ui_main_window = Ui_main_window()
         self.ui_main_window.setupUi(self)

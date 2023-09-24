@@ -1,30 +1,35 @@
-import sys
+from PyQt6.QtCore import QObject, pyqtSignal
 from pathlib import Path
 import re
 from datetime import datetime
 import random
+import time
 
 
-class Model:
-    def __init__(self, working_dir=Path(), file_type=""):
+class Model(QObject):
+    processing_started = pyqtSignal(int)
+    progress = pyqtSignal(int)
+    finished = pyqtSignal()
+
+    def __init__(self, working_dir, file_type):
+        super().__init__()
         self.working_dir = working_dir
         self.file_type = file_type
 
-    def setWorkingDir(self, working_dir: Path):
-        self.working_dir = working_dir
-
-    def setFileType(self, file_type: str):
-        self.file_type = file_type
-
-    def handle(self):
+    def run(self):
+        targets = []
         for child in self.working_dir.iterdir():
-            if not re.match(f".*_{self.file_type}.txt$", child.name):
-                continue
-            path = Path(child.stem + f"_new_{datetime.now().strftime('%d.%m.%y_%H.%M')}.txt")
-            with open(self.working_dir / path, "w") as f:
-                f.write(f"{random.randint(1, 1000)} {self.file_type}")
+            if re.match(f".*_{self.file_type}.txt$", child.name):
+                targets.append(child)
 
+        amount = len(targets)
+        if amount:
+            self.processing_started.emit(amount)
+            for i in range(amount):
+                path = Path(targets[i].stem + f"_new_{datetime.now().strftime('%d.%m.%y_%H.%M')}.txt")
+                with open(self.working_dir / path, "w") as f:
+                    f.write(f"{random.randint(1, 1000)} {self.file_type}")
+                time.sleep(0.7)
+                self.progress.emit(i + 1)
 
-if __name__ == "__main__":
-    if len(sys.argv) == 3:
-        Model(Path(sys.argv[1]), sys.argv[2]).handle()
+        self.finished.emit()

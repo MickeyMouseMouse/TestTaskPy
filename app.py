@@ -1,10 +1,8 @@
-from Model import Model
-from Controller import Controller
 from PyQt6.QtWidgets import QApplication
+from Controller import Controller
 
 
 if __name__ == '__main__':
     app = QApplication([])
-    model = Model()
-    controller = Controller(model)
+    controller = Controller()
     app.exec()
