@@ -136,7 +136,7 @@ class Ui_main_window(object):
         main_window.setWindowTitle(_translate("main_window", "Геопортал"))
         self.comboBox.setItemText(0, _translate("main_window", "v1"))
         self.comboBox.setItemText(1, _translate("main_window", "v2"))
-        self.label_status.setText(_translate("main_window", "Выберите тип и нажмите Запуск"))
+        self.label_status.setText(_translate("main_window", "Выберите директорию, тип и нажмите Запуск"))
         self.btn_start.setText(_translate("main_window", "Запуск"))
         self.menu.setTitle(_translate("main_window", "Настройки"))
 

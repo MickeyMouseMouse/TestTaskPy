@@ -52,4 +52,4 @@ class Controller:
     def reset(self):
         self.thread.quit()
         self.model.deleteLater()
-        self.view.ui_main_window.label_status.setText("Выберите тип и нажмите Запуск")
+        self.view.ui_main_window.label_status.setText("Выберите директорию, тип и нажмите Запуск")
